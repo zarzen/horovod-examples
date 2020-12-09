@@ -12,12 +12,27 @@ import horovod.torch as hvd
 
 def test_correctness():
     """"""
+    print("-" * 10, 'test 10 random vals')
     r1 = torch.rand(10, dtype=torch.float32)
     r1 = r1.cuda()
     print('rank', hvd.rank(), 'random array', r1)
-    if hvd.size() > 1:
-        ret = hvd.allreduce(r1, name="random_tensor1")
-        print('allreduced', ret)
+    ret = hvd.allreduce(r1, name="random_tensor1")
+    print('allreduced', ret)
+
+    print('-'* 10, 'test 1 random val in-place')
+    one = torch.rand(1, dtype=torch.float32)
+    one = one.cuda()
+    print('rank', hvd.rank(), 'rand one', one)
+    one = hvd.allreduce_(one, name="allreduce_one_item")
+    print('allreduce', one)
+
+    print('-' * 10, 'test 1 random val out-place')
+    one = torch.rand(1, dtype=torch.float32)
+    one = one.cuda()
+    print('rank', hvd.rank(), 'rand one', one)
+    one = hvd.allreduce(one, name="allreduce_one_item")
+    print('allreduce', one)
+
 
 if __name__ == '__main__':
     
