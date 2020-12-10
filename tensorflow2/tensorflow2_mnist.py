@@ -80,7 +80,11 @@ def training_step(images, labels, first_batch):
 
 
 # Horovod: adjust number of steps based on number of GPUs.
-for batch, (images, labels) in enumerate(dataset.take(10000 // hvd.size())):
+images = tf.random.uniform([128, 28, 28, 1])
+labels = target = tf.random.uniform([128, 1], minval=0, maxval=9, dtype=tf.int64)
+
+# for batch, (images, labels) in enumerate(dataset.take(10000 // hvd.size())):
+for batch in range(10000):
     loss_value = training_step(images, labels, batch == 0)
 
     if batch % 10 == 0 and hvd.local_rank() == 0:
