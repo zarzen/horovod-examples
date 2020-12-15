@@ -12,6 +12,10 @@ import horovod.torch as hvd
 
 def test_correctness():
     """"""
+    broadcast_tensor = torch.rand(10, dtype=torch.float32)
+    hvd.broadcast(broadcast_tensor, 0)
+    print("="* 10, 'after broadcast')
+
     print("-" * 10, 'test 10 random vals')
     r1 = torch.rand(10, dtype=torch.float32)
     r1 = r1.cuda()
