@@ -47,7 +47,7 @@ args = parser.parse_args()
 args.cuda = not args.no_cuda
 
 # Horovod: initialize Horovod.
-hvd.init()
+hvd.init(model_bw_order_file='tf-' + args.model)
 
 # Horovod: pin GPU to be used to process local rank (one GPU per process)
 if args.cuda:

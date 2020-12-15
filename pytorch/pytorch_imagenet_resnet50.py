@@ -176,7 +176,7 @@ if __name__ == '__main__':
 
     allreduce_batch_size = args.batch_size * args.batches_per_allreduce
 
-    hvd.init()
+    hvd.init(model_bw_order_file="torch-resnet50")
     torch.manual_seed(args.seed)
 
     if args.cuda:
