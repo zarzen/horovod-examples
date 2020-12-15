@@ -35,7 +35,7 @@ parser.add_argument('--use-adasum', action='store_true', default=False,
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
 
-hvd.init()
+hvd.init(model_bw_order_file="torch-" + args.model)
 
 if args.cuda:
     # Horovod: pin GPU to local rank.
