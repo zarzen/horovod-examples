@@ -113,7 +113,7 @@ if __name__ == '__main__':
     args.cuda = not args.no_cuda and torch.cuda.is_available()
 
     # Horovod: initialize library.
-    hvd.init()
+    hvd.init(model_bw_order_file='torch-mnist')
     torch.manual_seed(args.seed)
 
     if args.cuda:
