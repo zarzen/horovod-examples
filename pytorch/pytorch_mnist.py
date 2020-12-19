@@ -74,8 +74,9 @@ def train(epoch):
 
 def metric_average(val, name):
     # if on cpu might cause problem
-    tensor = torch.tensor(val).cuda()
+    tensor = torch.tensor([val]).cuda()
     all_results = hvd.allgather(tensor, name=name)
+    # print("all results", all_results)
     # avg_tensor = hvd.allreduce(tensor, name=name)
     return torch.mean(all_results).item()
 
