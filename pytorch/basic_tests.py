@@ -40,7 +40,7 @@ def test_correctness():
 
 if __name__ == '__main__':
     
-    hvd.init()
+    hvd.init(model_bw_order_file='torch-mnist')
     random_seed = hvd.rank()
     torch.manual_seed(random_seed)
     torch.cuda.set_device(0)
