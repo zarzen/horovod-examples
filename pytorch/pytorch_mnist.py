@@ -185,7 +185,7 @@ if __name__ == '__main__':
                                          named_parameters=model.named_parameters(),
                                          compression=compression,
                                          model=model, num_steps=args.num_warmup_batches + 
-                                         (args.num_iters * args.num_batches_per_iter)
+                                         (args.num_iters * args.num_batches_per_iter),
                                          op=hvd.Adasum if args.use_adasum else hvd.Average,
                                          gradient_predivide_factor=args.gradient_predivide_factor)
 
