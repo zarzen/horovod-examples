@@ -35,6 +35,7 @@ parser.add_argument('--use-adasum', action='store_true', default=False,
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
 
+# hvd.init()
 hvd.init(model_bw_order_file="torch-" + args.model)
 
 if args.cuda:
@@ -65,6 +66,8 @@ compression = hvd.Compression.fp16 if args.fp16_allreduce else hvd.Compression.n
 optimizer = hvd.DistributedOptimizer(optimizer,
                                      named_parameters=model.named_parameters(),
                                      compression=compression,
+                                     model=model, num_steps=args.num_warmup_batches + 
+                                     (args.num_iters * args.num_batches_per_iter)
                                      op=hvd.Adasum if args.use_adasum else hvd.Average)
 
 # Horovod: broadcast parameters & optimizer state.
